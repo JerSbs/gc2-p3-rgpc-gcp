@@ -1,17 +1,20 @@
 # STAGE 1: BUILD
-FROM golang:1.24 as builder
+FROM golang:1.24 AS builder
 
 WORKDIR /app
 
+# Gunakan proxy langsung agar stabil
+ENV GOFLAGS=-mod=vendor
+
 # Download dependencies
 COPY go.mod go.sum ./
-RUN go mod download
+COPY vendor/ ./vendor/
 
 # Copy source code
 COPY . .
 
-# Build static gRPC binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o grpc-server
+# Build static gRPC binary from ./cmd/
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o grpc-server ./cmd
 
 # STAGE 2: RUNTIME
 FROM debian:bullseye-slim

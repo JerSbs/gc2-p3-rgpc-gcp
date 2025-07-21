@@ -1,5 +1,5 @@
 # STAGE 1: BUILD
-FROM golang:1.24 as builder
+FROM golang:1.24 AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 
 # Build static REST binary
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o rest-server
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o rest-server ./cmd
 
 # STAGE 2: RUNTIME
 FROM debian:bullseye-slim
