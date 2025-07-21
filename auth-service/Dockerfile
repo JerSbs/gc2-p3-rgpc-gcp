@@ -5,11 +5,12 @@ WORKDIR /app
 
 # Set GOPROXY langsung ke sumber
 ENV GOPROXY=direct
+ENV GOFLAGS=-mod=vendor
+
 
 # Download dependencies
 COPY go.mod go.sum ./
 COPY vendor/ ./vendor/
-RUN go mod download
 
 # Copy source code
 COPY . .
