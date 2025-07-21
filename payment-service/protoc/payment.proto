@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package payment;
+
+option go_package = "internal/payment/delivery/grpc/paymentpb";
+
+// Data payment yang akan dipakai sebagai response
+message Payment {
+  string id = 1;
+  string email = 2;
+  double amount = 3;
+  string status = 4;
+}
+
+// Digunakan saat membuat payment
+message AddPaymentRequest {
+  string email = 1;
+  double amount = 2;
+}
+
+// Digunakan untuk ambil/hapus payment by ID
+message GetPaymentByIDRequest {
+  string id = 1;
+}
+
+message DeletePaymentByIDRequest {
+  string id = 1;
+}
+
+// Digunakan untuk ambil semua data
+message GetAllPaymentsRequest {}
+
+message GetAllPaymentsResponse {
+  repeated Payment payments = 1;
+}
+
+// Definisi service gRPC
+service PaymentService {
+  rpc AddPayment(AddPaymentRequest) returns (Payment);
+  rpc GetPaymentByID(GetPaymentByIDRequest) returns (Payment);
+  rpc DeletePaymentByID(DeletePaymentByIDRequest) returns (Payment);
+  rpc GetAllPayments(GetAllPaymentsRequest) returns (GetAllPaymentsResponse);
+}

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "/proto"; 
+
+// Message untuk user request saat register
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// Message untuk response setelah register
+message RegisterResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// Message untuk login
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// Response berisi token JWT
+message LoginResponse {
+  string token = 1;
+}
+
+// Untuk validasi token
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+message ValidateTokenResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+// Definisi service gRPC
+service AuthService {
+  rpc RegisterUser(RegisterRequest) returns (RegisterResponse);
+  rpc LoginUser(LoginRequest) returns (LoginResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+}

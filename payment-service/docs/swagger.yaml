@@ -1,0 +1,57 @@
+basePath: /
+definitions:
+  domain.Payment:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: This is a simple payment service
+  title: Payment Service API
+  version: "1.0"
+paths:
+  /payments:
+    post:
+      consumes:
+      - application/json
+      description: Create a new payment and store it in the database
+      parameters:
+      - description: Payment Payload
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Payment'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Payment'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create a new payment
+      tags:
+      - payments
+swagger: "2.0"

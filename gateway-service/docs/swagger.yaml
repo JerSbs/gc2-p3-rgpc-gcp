@@ -1,0 +1,11 @@
+basePath: /
+host: localhost:8082
+info:
+  contact: {}
+  description: REST API Gateway untuk Auth dan Product Service
+  title: Gateway Service API
+  version: "1.0"
+paths: {}
+schemes:
+- http
+swagger: "2.0"
